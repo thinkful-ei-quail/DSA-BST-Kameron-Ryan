@@ -9,15 +9,12 @@ const BinarySearchTree = require('./binary-tree');
 //*  3. Create a BST Class
 
 const BST = new BinarySearchTree();
-//console.log(BST);
 
 const insertions = [3, 1, 4, 6, 9, 2, 5, 7];
 
 for (let i = 0; i < insertions.length; i++) {
   BST.insert(insertions[i]);
 }
-
-// console.log(BST.left);
 
 const easyQuestion = new BinarySearchTree();
 
@@ -27,4 +24,24 @@ for (let i = 0; i < easy.length; i++) {
   easyQuestion.insert(easy[i]);
 }
 
-console.log(easyQuestion);
+// 4. What is this function?
+// This function adds all values in the tree.
+function tree(t) {
+  if(!t) {
+    return 0
+  }
+  return tree(t.left) + t.value + tree(t.right);
+}
+
+// 5. Height of BST
+
+height = (t, c = 0) => {
+  if(!t) {
+    return 0
+  }
+  let lCount = height(t.left);
+  let rCount = height(t.right);
+  return 1 + Math.max(lCount, rCount)
+}
+
+console.log(height(easyQuestion))
