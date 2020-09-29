@@ -11,8 +11,8 @@ const BinarySearchTree = require('./binary-tree');
 
 const BST = new BinarySearchTree();
 
-const insertions = [1, 2, 3, 4, 5];
-// const insertions = [3, 1, 4, 6, 9, 2, 5, 7];
+//const insertions = [1, 2, 3, 4, 5];
+const insertions = [3, 1, 4, 6, 9, 2, 5, 7];
 // const insertions = [1, 2, 3, 4, 5, 6, 7, 8, 200, 199, 198, 197, 196, 195, 194];
 // const insertions = [8, 3, 6, 13, 4, 7, 10, 14, 1];
 for (let i = 0; i < insertions.length; i++) {
@@ -93,7 +93,7 @@ const isBST3 = (t, min = -Infinity, max = Infinity) => {
 ////////
 ///////
 
-console.log(isBST3(BST));
+// console.log(isBST3(BST));
 
 const sortedBST = new BinarySearchTree();
 
@@ -135,8 +135,44 @@ function findThird(t) {
   }
 }
 
+function thirdLargest(tree) {
+  if (!tree.right) {
+    console.log(tree.key);
+    console.log(tree.parent.key);
+    return tree.parent.key;
+  }
+  if (tree.right) {
+    return thirdLargest(tree.right);
+  }
+}
+
+function thirdBiggest(bst) {
+  const values = orderLargestToSmallest(bst);
+  if (values.length < 3) {
+    return 'Not enough elements';
+  }
+  return values[2];
+}
+
+function orderLargestToSmallest(bst, values = []) {
+  if (!bst.left && !bst.right) {
+    values.push(bst.value);
+  } else if (bst.left && bst.right) {
+    orderLargestToSmallest(bst.right, values);
+    values.push(bst.value);
+    orderLargestToSmallest(bst.left, values);
+  } else if (bst.right) {
+    orderLargestToSmallest(bst.right, values);
+    values.push(bst.value);
+  } else if (bst.left) {
+    values.push(bst.value);
+    orderLargestToSmallest(bst.left, values);
+  }
+  return values; // <- ignored except for the root
+}
+
 console.log('---------');
-console.log(thirdLargest(BST)); // 6
+console.log(thirdBiggest(BST)); // 6
 // console.log(findThird(socks)); // 8 ???
 
 // * 8. Balanced BST
@@ -184,8 +220,8 @@ function createBalancedBst(arr) {
 
 const tree100 = createBalancedBst([1, 2, 3, 4, 5]);
 
-console.log(isBalanced(tree100));
-console.log(isBalanced(BST));
+//console.log(isBalanced(tree100));
+//console.log(isBalanced(BST));
 
 // * 9 Are they the same BSTs?
 
